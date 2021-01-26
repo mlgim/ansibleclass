@@ -71,5 +71,12 @@
     debug:
       msg: "{{ webserver_ip_fact }}"
 
+  - name: Make sure the ~/.ssh dir exists
+    file:
+      path: "~/.ssh"
+      state: directory
+      mode: 0700
+      owner: "{{ ansible_user_id }}"
+
   - name: Add ansibleserver to ssh known_hosts
     shell: "ssh-keyscan -t ecdsa {{ webserver_ip_fact }}  >> /home/{{ ansible_user_id }}/.ssh/known_hosts"
